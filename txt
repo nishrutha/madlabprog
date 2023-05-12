@@ -1,0 +1,240 @@
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
+import android.os.Bundle
+import android.provider.MediaStore
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatDelegate
+//import androidx.appcompat.app.AppCompatActivity
+//import androidx.appcompat.app.AppCompatDelegate
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : AppCompatActivity() {
+    private var img: Uri? = null
+    private var pickImg = 100
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        setViews()
+    }
+
+    //Button handler functions
+    private fun setViews() {
+        logoBtn.setOnClickListener{pickImage()}
+        genBtn.setOnClickListener{setTextViews()}
+    }
+
+    //Function to set text views
+    private fun setTextViews(){
+        val cName = cName.getText()
+        val pName = pName.getText()
+        val pJob = pJob.getText()
+        val pPhone = pPhone.getText()
+        val pAddress = pAddress.getText()
+        val pMail = pMail.getText()
+
+        cNameView.text = cName
+        pNameView.text = pName
+        pJobView.text = pJob
+        pAddressView.text = pAddress
+        pMailView.text = pMail
+        pPhoneView.text = pPhone
+        lineView.setBackgroundColor(Color.BLACK)
+        cLogoView.setImageURI(img)
+    }
+
+    //Function to select picture
+    private fun pickImage(){
+        val pic = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
+        startActivityForResult(pic, pickImg)
+    }
+
+    //Function to apply picture
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == RESULT_OK && requestCode == pickImg){
+            img = data?.data
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import android.app.WallpaperManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Bundle
+import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : AppCompatActivity() {
+    var myWallpaperList = arrayOf(R.drawable.wallpaper4,R.drawable.wallpaper2,R.drawable.wallpaper3,R.drawable.wallpaper5,R.drawable.wallpaper1)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        WPBtn.setOnClickListener { setWallpaper() }
+    }
+
+    private fun setWallpaper() {
+        Toast.makeText(this, "Setting Wallpaper please wait.", Toast.LENGTH_SHORT).show()
+        Handler().postDelayed({
+            for(i in myWallpaperList) {
+                val pic: Bitmap = BitmapFactory.decodeResource(resources, i)
+                val wM = WallpaperManager.getInstance(baseContext)
+                wM.setBitmap(pic)
+            }
+        }, 2000)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MAD LAB
+A
+Stream
+Classwork
+People
+Stream
+MAD LAB
+A
+Upcoming
+Woohoo, no work due soon!
+
+Announce something to your class
+
+Announcement: "Upload Your Synopsis"
+Rashmi BN
+Created Jun 13, 2022Jun 13, 2022
+Upload Your Synopsis
+1 class comment
+
+1JS19CS049 DEEPAKJun 13, 2022
+Can't attach any file ma'am
+
+
+Announcement: "Kotlin files"
+Rashmi BN
+Created Jun 3, 2022Jun 3, 2022
+Kotlin files
+
+WallPaper.txt
+Text
+
+VC.txt
+Text
+
+counter.txt
+Text
+
+//import androidx.appcompat.app.AppCompatActivity
+
+import android.os.Bundle
+
+import android.os.CountDownTimer
+
+import android.support.v7.app.AppCompatActivity
+
+import kotlinx.android.synthetic.main.activity_main.*
+
+
+
+class MainActivity : AppCompatActivity() {
+
+
+
+    private val timer = MyCounter(10000000000, 1000)
+
+    var countervalue: Int = 0
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.activity_main)
+
+
+
+        startBtn.setOnClickListener {
+
+            timer.start()
+
+            startBtn.isEnabled = false
+
+        }
+
+        stopBtn.setOnClickListener {
+
+            timer.cancel()
+
+            startBtn.isEnabled = true
+
+        }
+
+
+
+    }
+
+
+
+    inner class MyCounter(millisInFuture: Long, countDownInterval: Long) :
+
+        CountDownTimer(millisInFuture, countDownInterval) {
+
+        override fun onFinish() {
+
+        }
+
+
+
+        override fun onTick(millisUntilFinished: Long) {
+
+            countervalue++
+
+            viewNumber.text = (countervalue).toString()
+
+        }
+
+    }
+
+}
