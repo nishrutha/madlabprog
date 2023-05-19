@@ -238,3 +238,25 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+lateinit var tts:TextToSpeech
+
+
+
+tts=TextToSpeech(applicationContext,TextToSpeech.OnInitListener({
+if(it==TextToSpeech.SUCCESS){
+tts.language=Locale.US
+tts.setSpeechRate(0.5f)
+tts.speak(edText.text.toString(),TextToSpeech,QUEUE_ADD,null)
+}
+})
